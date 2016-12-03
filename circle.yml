@@ -1,0 +1,11 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - docker build -t imega/busted:$CIRCLE_SHA1 .
+
+test:
+  post:
+    - docker run --rm -v `pwd`/tests:/data imega/busted:$CIRCLE_SHA1
